@@ -14,7 +14,7 @@ public class LedController {
     private static GpioPinDigitalOutput yellowPin;
     private static GpioPinDigitalOutput redPin;
 
-    private static int count = 0;
+    private static int count = -1;
 
     @RequestMapping("/")
     public String greeting()
@@ -33,6 +33,9 @@ public class LedController {
         }
 
         resetPins();
+
+        count++;
+
         if (count % 3 == 0)
         {
             greenPin.high();
@@ -43,8 +46,7 @@ public class LedController {
             yellowPin.high();
             return "Yellow";
         }
-        else
-        {
+        else {
             redPin.high();
             return "Red";
         }
