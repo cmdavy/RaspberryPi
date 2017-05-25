@@ -65,8 +65,6 @@ public class LedController {
 
     private String toggle(int index)
     {
-        toggle(index % 3);
-
         if (index % 3 == 0)
         {
             greenPin.high();
