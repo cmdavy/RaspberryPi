@@ -31,8 +31,6 @@ public class LedController {
     {
         init();
 
-        resetPins();
-
         count++;
 
         return toggle(count);
@@ -48,7 +46,6 @@ public class LedController {
         LocalDateTime startTime = LocalDateTime.now();
         while (LocalDateTime.now().isBefore(startTime.plusNanos(duration)))
         {
-            resetPins();
             index ++;
             toggle(index);
             try {
@@ -58,29 +55,9 @@ public class LedController {
             {
                 return "Error sleeping";
             }
-            return Integer.toString(index);
         }
         return "All done!";
     }
-
-    private String toggle(int index)
-    {
-        if (index % 3 == 0)
-        {
-            greenPin.high();
-            return "Green";
-        }
-        else if (index % 3 == 1)
-        {
-            yellowPin.high();
-            return "Yellow";
-        }
-        else {
-            redPin.high();
-            return "Red";
-        }
-    }
-
 
     @RequestMapping("/light/{color}/{state}")
     public String changeLightState(@PathVariable("color") String color, @PathVariable("state") String state)
@@ -127,6 +104,26 @@ public class LedController {
         greenPin.low();
         yellowPin.low();
         redPin.low();
+    }
+
+    private String toggle(int index)
+    {
+        resetPins();
+
+        if (index % 3 == 0)
+        {
+            greenPin.high();
+            return "Green";
+        }
+        else if (index % 3 == 1)
+        {
+            yellowPin.high();
+            return "Yellow";
+        }
+        else {
+            redPin.high();
+            return "Red";
+        }
     }
 
 }
