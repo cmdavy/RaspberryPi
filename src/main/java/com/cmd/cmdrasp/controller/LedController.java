@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Created by chrisdavy on 5/24/17.
  */
+@RestController
 public class LedController {
 
     private static GpioPinDigitalOutput pin;
