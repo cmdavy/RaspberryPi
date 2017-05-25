@@ -14,6 +14,8 @@ public class LedController {
     private static GpioPinDigitalOutput yellowPin;
     private static GpioPinDigitalOutput redPin;
 
+    private static int count = 0;
+
     @RequestMapping("/")
     public String greeting()
     {
@@ -30,16 +32,29 @@ public class LedController {
             redPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Red", PinState.HIGH);
         }
 
-
-        greenPin.toggle();
-        if (greenPin.getState().isLow())
+        resetPins();
+        if (count % 3 == 0)
         {
-            return "Off";
+            greenPin.high();
+            return "Green";
+        }
+        else if (count % 3 == 1)
+        {
+            yellowPin.high();
+            return "Yellow";
         }
         else
         {
-            return "On";
+            redPin.high();
+            return "Red";
         }
+    }
+
+    private void resetPins()
+    {
+        greenPin.low();
+        yellowPin.low();
+        redPin.low();
     }
 
 }
