@@ -55,7 +55,7 @@ public class LedController {
         init();
 
         PinState pinState = PinState.LOW;
-        if (state.toLowerCase().equals("ON"))
+        if (state.toLowerCase().equals("on"))
         {
             pinState = PinState.HIGH;
         }
