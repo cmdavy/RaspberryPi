@@ -26,9 +26,16 @@ public class LedController {
             pin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyLED", PinState.LOW);
         }
 
-        pin.toggle();
 
-        return "OK";
+        pin.toggle();
+        if (pin.getState().isLow())
+        {
+            return "Off";
+        }
+        else
+        {
+            return "On";
+        }
     }
 
 }
