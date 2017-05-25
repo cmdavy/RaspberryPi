@@ -1,9 +1,12 @@
 package com.cmd.cmdrasp.controller;
 
 import com.pi4j.io.gpio.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by chrisdavy on 5/24/17.
@@ -32,12 +35,43 @@ public class LedController {
 
         count++;
 
-        if (count % 3 == 0)
+        return toggle(count);
+    }
+
+    @RequestMapping("/streetlight/{msDuration}")
+    public String streetlight(@PathVariable("msDuration") String msDuration)
+    {
+        init();
+
+        int duration = Integer.parseInt(msDuration);
+        int index = ++;
+        LocalDateTime startTime = LocalDateTime.now();
+        while (LocalDateTime.now().isBefore(startTime.plusNanos(duration)))
+        {
+            resetPins();
+            index ++;
+            toggle(index);
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception ex)
+            {
+                return "Error sleeping";
+            }
+        }
+        return "All done!";
+    }
+
+    private String toggle(int index)
+    {
+        toggle(index % 3);
+
+        if (index % 3 == 0)
         {
             greenPin.high();
             return "Green";
         }
-        else if (count % 3 == 1)
+        else if (index % 3 == 1)
         {
             yellowPin.high();
             return "Yellow";
