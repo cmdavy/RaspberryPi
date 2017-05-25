@@ -84,8 +84,8 @@ public class LedController {
         if (greenPin == null || yellowPin == null || redPin == null) {
             GpioController gpioController = GpioFactory.getInstance();
             greenPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.HIGH);
-            yellowPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_11, "Yellow", PinState.LOW);
-            redPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Red", PinState.LOW);
+            yellowPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_11, "Yellow", PinState.HIGH);
+            redPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Red", PinState.HIGH);
         }
     }
 
