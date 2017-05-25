@@ -58,6 +58,7 @@ public class LedController {
             {
                 return "Error sleeping";
             }
+            return Integer.toString(index);
         }
         return "All done!";
     }
