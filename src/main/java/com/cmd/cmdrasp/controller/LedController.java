@@ -44,7 +44,7 @@ public class LedController {
         init();
 
         int duration = Integer.parseInt(msDuration);
-        int index = ++;
+        int index = -1;
         LocalDateTime startTime = LocalDateTime.now();
         while (LocalDateTime.now().isBefore(startTime.plusNanos(duration)))
         {
