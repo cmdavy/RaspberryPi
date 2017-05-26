@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.concurrent.Future;
 
 /**
  * Created by chrisdavy on 5/24/17.
@@ -55,11 +53,11 @@ public class LedController {
             }
             catch (Exception ex)
             {
-                return "Error sleeping";
+                return ex.getMessage();
             }
         }
         resetPins();
-        return "All done!";
+        return "Done";
     }
 
     @RequestMapping("/light/{color}/{state}")
@@ -75,15 +73,33 @@ public class LedController {
 
         if (color.toLowerCase().equals("green"))
         {
-            greenPin.setState(pinState);
+            if (state.toLowerCase().equals("toggle"))
+            {
+                greenPin.toggle();
+            }
+            else {
+                greenPin.setState(pinState);
+            }
         }
         else if (color.toLowerCase().equals("yellow"))
         {
-            yellowPin.setState(pinState);
+            if (state.toLowerCase().equals("toggle"))
+            {
+                yellowPin.toggle();
+            }
+            else {
+                yellowPin.setState(pinState);
+            }
         }
         else if (color.toLowerCase().equals("red"))
         {
-            redPin.setState(pinState);
+            if (state.toLowerCase().equals("toggle"))
+            {
+                redPin.toggle();
+            }
+            else {
+                redPin.setState(pinState);
+            }
         }
         else
         {
