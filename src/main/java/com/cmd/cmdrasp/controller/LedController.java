@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 
 /**
  * Created by chrisdavy on 5/24/17.
@@ -18,6 +20,9 @@ public class LedController {
     private static GpioPinDigitalOutput redPin;
 
     private static int count = -1;
+
+    private static String asyncResult = "";
+    private static boolean asyncRunning = false;
 
     @RequestMapping("/")
     public String greeting()
@@ -39,6 +44,12 @@ public class LedController {
     @RequestMapping("/streetlight/{duration}")
     public String streetlight(@PathVariable("duration") String duration) throws InterruptedException
     {
+        if (asyncRunning)
+        {
+            return "Busy...";
+        }
+        asyncRunning = true;
+        asyncResult = "Running...";
         init();
 
         int durationInSec = Integer.parseInt(duration);
@@ -53,11 +64,20 @@ public class LedController {
             }
             catch (Exception ex)
             {
+                asyncResult = ex.getMessage();
                 return ex.getMessage();
             }
         }
         resetPins();
+        asyncResult = "Done";
+        asyncRunning = false;
         return "Done";
+    }
+
+    @RequestMapping("/streetlight/result")
+    public String streetLightResult()
+    {
+        return asyncResult;
     }
 
     @RequestMapping("/light/{color}/{state}")
