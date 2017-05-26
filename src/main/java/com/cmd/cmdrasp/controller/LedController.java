@@ -79,6 +79,7 @@ public class LedController {
                 if (color.toLowerCase().equals("green") || color.toLowerCase().equals("red"))
                 {
                     Thread.sleep(3000);
+                    i += 2;
                 }
                 else {
                     Thread.sleep(1000);
