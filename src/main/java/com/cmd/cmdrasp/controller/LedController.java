@@ -56,7 +56,7 @@ public class LedController {
 
         count++;
 
-        return toggle(count);
+        return toggle(count, gpioPinDigitalOutputHashMap.size());
     }
 
     @Async
@@ -74,7 +74,7 @@ public class LedController {
         int durationInSec = Integer.parseInt(duration);
         for (int i = 0; i < durationInSec; i++)
         {
-            toggle(i);
+            toggle(i, 3);
             try {
                 Thread.sleep(1000);
             }
@@ -144,21 +144,21 @@ public class LedController {
         blueLed.low();
     }
 
-    private String toggle(int index)
+    private String toggle(int index, int count)
     {
         resetPins();
 
-        if (index % 4 == 0)
+        if (index % count == 0)
         {
             greenLed.high();
             return "Green";
         }
-        else if (index % 4 == 1)
+        else if (index % count == 1)
         {
             yellowLed.high();
             return "Yellow";
         }
-        else if (index % 4 == 2){
+        else if (index % count == 2){
             redLed.high();
             return "Red";
         }
