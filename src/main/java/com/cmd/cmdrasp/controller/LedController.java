@@ -131,6 +131,7 @@ public class LedController {
     @RequestMapping("/off")
     public String turnOff()
     {
+        init();
         resetPins();
         return "All LEDs are off";
     }
