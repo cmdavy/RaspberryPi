@@ -133,25 +133,31 @@ public class LedController {
         greenLed.low();
         yellowLed.low();
         redLed.low();
+        blueLed.low();
     }
 
     private String toggle(int index)
     {
         resetPins();
 
-        if (index % 3 == 0)
+        if (index % 4 == 0)
         {
             greenLed.high();
             return "Green";
         }
-        else if (index % 3 == 1)
+        else if (index % 4 == 1)
         {
             yellowLed.high();
             return "Yellow";
         }
-        else {
+        else if (index % 4 == 2){
             redLed.high();
             return "Red";
+        }
+        else
+        {
+            blueLed.high();
+            return "Blue";
         }
     }
 
