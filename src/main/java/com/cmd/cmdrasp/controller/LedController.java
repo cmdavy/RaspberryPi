@@ -55,8 +55,6 @@ public class LedController {
         int durationInSec = Integer.parseInt(duration);
         for (int i = 0; i < durationInSec; i++)
         {
-            i++;
-
             toggle(i);
             try {
                 Thread.sleep(1000);
