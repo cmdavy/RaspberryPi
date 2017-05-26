@@ -1,12 +1,15 @@
 package com.cmd.cmdrasp.controller;
 
 import com.pi4j.io.gpio.*;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.Future;
 
 /**
  * Created by chrisdavy on 5/24/17.
@@ -36,8 +39,9 @@ public class LedController {
         return toggle(count);
     }
 
+    @Async
     @RequestMapping("/streetlight/{msDuration}")
-    public String streetlight(@PathVariable("msDuration") String msDuration)
+    public String streetlight(@PathVariable("msDuration") String msDuration) throws InterruptedException
     {
         init();
 
