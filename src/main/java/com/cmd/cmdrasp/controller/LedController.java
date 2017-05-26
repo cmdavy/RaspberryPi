@@ -45,7 +45,7 @@ public class LedController {
     {
         init();
 
-        int duration = Integer.parseInt(duration);
+        int durationInSec = Integer.parseInt(duration);
         int index = -1;
         LocalDateTime startTime = LocalDateTime.now();
         for (int i = 0; i < 10; i++)
@@ -62,7 +62,7 @@ public class LedController {
             }
         }
         index = -1;
-        while (LocalDateTime.now().isBefore(startTime.plusSeconds(duration / 1000)))
+        while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)))
         {
             index ++;
             toggle(index);
