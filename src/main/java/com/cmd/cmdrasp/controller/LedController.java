@@ -147,7 +147,7 @@ public class LedController {
         init();
 
         int durationInSec = Integer.parseInt(duration);
-        for (int i = 0; i < durationInSec; i++)
+        for (int i = 0; i < durationInSec * 5; i++)
         {
             try {
                 toggle((int)Math.floor(Math.random() * gpioPinDigitalOutputHashMap.size()), gpioPinDigitalOutputHashMap.size());
