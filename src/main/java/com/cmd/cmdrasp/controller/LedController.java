@@ -72,17 +72,19 @@ public class LedController {
         init();
 
         int durationInSec = Integer.parseInt(duration);
-        for (int i = 0; i < durationInSec; i++)
+        int thisDuration = durationInSec;
+        for (int i = 0; i < thisDuration; i++)
         {
             String color = toggle(i, 3);
             try {
                 if (color.toLowerCase().equals("green") || color.toLowerCase().equals("red"))
                 {
                     Thread.sleep(3000);
-                    i += 2;
+                    thisDuration -= 3;
                 }
                 else {
                     Thread.sleep(1000);
+                    thisDuration--;
                 }
             }
             catch (Exception ex)
