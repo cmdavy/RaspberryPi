@@ -40,15 +40,29 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping("/streetlight/{msDuration}")
-    public String streetlight(@PathVariable("msDuration") String msDuration) throws InterruptedException
+    @RequestMapping("/streetlight/{duration}")
+    public String streetlight(@PathVariable("duration") String duration) throws InterruptedException
     {
         init();
 
-        int duration = Integer.parseInt(msDuration);
+        int duration = Integer.parseInt(duration);
         int index = -1;
         LocalDateTime startTime = LocalDateTime.now();
-        while (LocalDateTime.now().isBefore(startTime.plusNanos(duration)))
+        for (int i = 0; i < 10; i++)
+        {
+            index++;
+
+            toggle(index);
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception ex)
+            {
+                return "Error sleeping";
+            }
+        }
+        index = -1;
+        while (LocalDateTime.now().isBefore(startTime.plusSeconds(duration / 1000)))
         {
             index ++;
             toggle(index);
