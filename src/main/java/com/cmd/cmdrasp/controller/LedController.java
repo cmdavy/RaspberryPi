@@ -19,10 +19,26 @@ public class LedController {
     private static GpioPinDigitalOutput yellowPin;
     private static GpioPinDigitalOutput redPin;
 
+    private HashMap<String, GpioPinDigitalOutput> gpioPinDigitalOutputHashMap = new HashMap<String, GpioPinDigitalOutput>();
+
     private static int count = -1;
 
-    private static String asyncResult = "";
+    private static String asyncResult = "Not started";
     private static boolean asyncRunning = false;
+
+    private void init()
+    {
+        if (greenPin == null || yellowPin == null || redPin == null) {
+            GpioController gpioController = GpioFactory.getInstance();
+            greenPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
+            yellowPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Yellow", PinState.LOW);
+            redPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
+
+            gpioPinDigitalOutputHashMap.put("GREEN", greenPin);
+            gpioPinDigitalOutputHashMap.put("YELLOW", yellowPin);
+            gpioPinDigitalOutputHashMap.put("RED", redPin);
+        }
+    }
 
     @RequestMapping("/")
     public String greeting()
@@ -65,7 +81,7 @@ public class LedController {
                 return ex.getMessage();
             }
 
-            asyncResult = String.format("Running for %d out of %d seconds...", i, durationInSec);
+            asyncResult = String.format("Running for %d of %d seconds...", i, durationInSec);
         }
         resetPins();
         asyncResult = "Done";
@@ -90,6 +106,24 @@ public class LedController {
             pinState = PinState.HIGH;
         }
 
+        if (gpioPinDigitalOutputHashMap.containsKey(color.toUpperCase()))
+        {
+            GpioPinDigitalOutput thisPin = gpioPinDigitalOutputHashMap.get(color.toUpperCase());
+            if (state.toLowerCase().equals("toggle"))
+            {
+                thisPin.toggle();
+                return String.format("%s LED is %s", color, thisPin.getState().toString());
+            }
+            else {
+                thisPin.setState(pinState);
+            }
+        }
+        else
+        {
+            return String.format("%s LED could not be set to %s", color, state);
+        }
+
+        /**
         if (color.toLowerCase().equals("green"))
         {
             if (state.toLowerCase().equals("toggle"))
@@ -127,17 +161,8 @@ public class LedController {
         {
             return String.format("%s LED could not be set to %s", color, state);
         }
+        */
         return String.format("%s LED is %s", color, state);
-    }
-
-    private void init()
-    {
-        if (greenPin == null || yellowPin == null || redPin == null) {
-            GpioController gpioController = GpioFactory.getInstance();
-            greenPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
-            yellowPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Yellow", PinState.LOW);
-            redPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
-        }
     }
 
     private void resetPins()
