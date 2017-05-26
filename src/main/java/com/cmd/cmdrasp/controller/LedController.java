@@ -15,9 +15,10 @@ import java.util.HashMap;
 @RestController
 public class LedController {
 
-    private static GpioPinDigitalOutput greenPin;
-    private static GpioPinDigitalOutput yellowPin;
-    private static GpioPinDigitalOutput redPin;
+    private static GpioPinDigitalOutput greenLed;
+    private static GpioPinDigitalOutput yellowLed;
+    private static GpioPinDigitalOutput redLed;
+    private static GpioPinDigitalOutput blueLed;
 
     private HashMap<String, GpioPinDigitalOutput> gpioPinDigitalOutputHashMap = new HashMap<String, GpioPinDigitalOutput>();
 
@@ -28,15 +29,17 @@ public class LedController {
 
     private void init()
     {
-        if (greenPin == null || yellowPin == null || redPin == null) {
+        if (greenLed == null || yellowLed == null || redLed == null) {
             GpioController gpioController = GpioFactory.getInstance();
-            greenPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
-            yellowPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Yellow", PinState.LOW);
-            redPin = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
+            greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
+            yellowLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Yellow", PinState.LOW);
+            redLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
+            blueLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Blue", PinState.LOW);
 
-            gpioPinDigitalOutputHashMap.put("GREEN", greenPin);
-            gpioPinDigitalOutputHashMap.put("YELLOW", yellowPin);
-            gpioPinDigitalOutputHashMap.put("RED", redPin);
+            gpioPinDigitalOutputHashMap.put("GREEN", greenLed);
+            gpioPinDigitalOutputHashMap.put("YELLOW", yellowLed);
+            gpioPinDigitalOutputHashMap.put("RED", redLed);
+            gpioPinDigitalOutputHashMap.put("BLUE", blueLed);
         }
     }
 
@@ -122,54 +125,14 @@ public class LedController {
         {
             return String.format("%s LED could not be set to %s", color, state);
         }
-
-        /**
-        if (color.toLowerCase().equals("green"))
-        {
-            if (state.toLowerCase().equals("toggle"))
-            {
-                greenPin.toggle();
-                return String.format("%s LED is %s", color, greenPin.getState().toString());
-            }
-            else {
-                greenPin.setState(pinState);
-            }
-        }
-        else if (color.toLowerCase().equals("yellow"))
-        {
-            if (state.toLowerCase().equals("toggle"))
-            {
-                yellowPin.toggle();
-                return String.format("%s LED is %s", color, yellowPin.getState().toString());
-            }
-            else {
-                yellowPin.setState(pinState);
-            }
-        }
-        else if (color.toLowerCase().equals("red"))
-        {
-            if (state.toLowerCase().equals("toggle"))
-            {
-                redPin.toggle();
-                return String.format("%s LED is %s", color, redPin.getState().toString());
-            }
-            else {
-                redPin.setState(pinState);
-            }
-        }
-        else
-        {
-            return String.format("%s LED could not be set to %s", color, state);
-        }
-        */
         return String.format("%s LED is %s", color, state);
     }
 
     private void resetPins()
     {
-        greenPin.low();
-        yellowPin.low();
-        redPin.low();
+        greenLed.low();
+        yellowLed.low();
+        redLed.low();
     }
 
     private String toggle(int index)
@@ -178,16 +141,16 @@ public class LedController {
 
         if (index % 3 == 0)
         {
-            greenPin.high();
+            greenLed.high();
             return "Green";
         }
         else if (index % 3 == 1)
         {
-            yellowPin.high();
+            yellowLed.high();
             return "Yellow";
         }
         else {
-            redPin.high();
+            redLed.high();
             return "Red";
         }
     }
