@@ -128,6 +128,13 @@ public class LedController {
         return String.format("%s LED is %s", color, state);
     }
 
+    @RequestMapping("/off")
+    public String turnOff()
+    {
+        resetPins();
+        return "All LEDs are off";
+    }
+
     private void resetPins()
     {
         greenLed.low();
