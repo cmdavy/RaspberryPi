@@ -76,6 +76,7 @@ public class LedController {
             if (state.toLowerCase().equals("toggle"))
             {
                 greenPin.toggle();
+                return String.format("%s LED is %s", color, greenPin.getState().toString());
             }
             else {
                 greenPin.setState(pinState);
@@ -86,6 +87,7 @@ public class LedController {
             if (state.toLowerCase().equals("toggle"))
             {
                 yellowPin.toggle();
+                return String.format("%s LED is %s", color, yellowPin.getState().toString());
             }
             else {
                 yellowPin.setState(pinState);
@@ -96,6 +98,7 @@ public class LedController {
             if (state.toLowerCase().equals("toggle"))
             {
                 redPin.toggle();
+                return String.format("%s LED is %s", color, redPin.getState().toString());
             }
             else {
                 redPin.setState(pinState);
