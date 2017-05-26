@@ -98,8 +98,8 @@ public class LedController {
         return "Done";
     }
 
-    @RequestMapping("/streetlight/result")
-    public String streetLightResult()
+    @RequestMapping("/result")
+    public String getAsyncResult()
     {
         return asyncResult;
     }
@@ -151,7 +151,7 @@ public class LedController {
         {
             try {
                 toggle((int)Math.floor(Math.random() * gpioPinDigitalOutputHashMap.size()), gpioPinDigitalOutputHashMap.size());
-                Thread.sleep(500);
+                Thread.sleep(200);
             }
             catch (Exception ex)
             {
