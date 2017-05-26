@@ -53,12 +53,11 @@ public class LedController {
         init();
 
         int durationInSec = Integer.parseInt(duration);
-        int index = -1;
         for (int i = 0; i < durationInSec; i++)
         {
-            index++;
+            i++;
 
-            toggle(index);
+            toggle(i);
             try {
                 Thread.sleep(1000);
             }
@@ -67,6 +66,8 @@ public class LedController {
                 asyncResult = ex.getMessage();
                 return ex.getMessage();
             }
+
+            asyncResult = String.format("Running for %d out of %d seconds...", i, durationInSec);
         }
         resetPins();
         asyncResult = "Done";
