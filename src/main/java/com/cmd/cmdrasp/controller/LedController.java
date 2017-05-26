@@ -2,8 +2,6 @@ package com.cmd.cmdrasp.controller;
 
 import com.pi4j.io.gpio.*;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,8 +45,7 @@ public class LedController {
 
         int durationInSec = Integer.parseInt(duration);
         int index = -1;
-        LocalDateTime startTime = LocalDateTime.now();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < durationInSec; i++)
         {
             index++;
 
@@ -61,19 +58,7 @@ public class LedController {
                 return "Error sleeping";
             }
         }
-        index = -1;
-        while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)))
-        {
-            index ++;
-            toggle(index);
-            try {
-                Thread.sleep(1000);
-            }
-            catch (Exception ex)
-            {
-                return "Error sleeping";
-            }
-        }
+        resetPins();
         return "All done!";
     }
 
