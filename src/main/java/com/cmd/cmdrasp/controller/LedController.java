@@ -134,6 +134,40 @@ public class LedController {
         return String.format("%s LED is %s", color, state);
     }
 
+    @Async
+    @RequestMapping("/dance/{duration}")
+    public String dance(@PathVariable("duration") String duration) throws InterruptedException
+    {
+        if (asyncRunning)
+        {
+            return "Busy...";
+        }
+        asyncRunning = true;
+        asyncResult = "Dancing...";
+        init();
+
+        int durationInSec = Integer.parseInt(duration);
+        for (int i = 0; i < durationInSec; i++)
+        {
+            try {
+                toggle((int)Math.floor(Math.random() * gpioPinDigitalOutputHashMap.size()), gpioPinDigitalOutputHashMap.size());
+                Thread.sleep(500);
+            }
+            catch (Exception ex)
+            {
+                asyncResult = ex.getMessage();
+                return ex.getMessage();
+            }
+
+            asyncResult = String.format("Dancing for %d of %d seconds...", i, durationInSec);
+        }
+        resetPins();
+        asyncResult = "Done";
+        asyncRunning = false;
+        return "Done";
+    }
+
+
     @RequestMapping("/off")
     public String turnOff()
     {
