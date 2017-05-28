@@ -15,7 +15,6 @@ import java.util.HashMap;
  * Created by chrisdavy on 5/24/17.
  */
 @RestController
-@Api(value="Raspberry Pi Led Application")
 public class LedController {
 
     private static GpioPinDigitalOutput greenLed;
