@@ -25,6 +25,7 @@ public class LedController {
     private static GpioPinDigitalOutput yellowLed;
     private static GpioPinDigitalOutput redLed;
     private static GpioPinDigitalOutput blueLed;
+    private static GpioPinDigitalOutput greenLed2;
 
     private static int danceSpeed = 200;
 
@@ -46,11 +47,13 @@ public class LedController {
             yellowLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Yellow", PinState.LOW);
             redLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
             blueLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Blue", PinState.LOW);
+            greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_05, "Green2", PinState.LOW);
 
             gpioPinDigitalOutputHashMap.put("GREEN", greenLed);
             gpioPinDigitalOutputHashMap.put("YELLOW", yellowLed);
             gpioPinDigitalOutputHashMap.put("RED", redLed);
             gpioPinDigitalOutputHashMap.put("BLUE", blueLed);
+            gpioPinDigitalOutputHashMap.put("GREEN2", greenLed2);
         }
     }
 
@@ -233,6 +236,7 @@ public class LedController {
     public String stop()
     {
         kill = true;
+        turnOff();
         return "Crickets";
     }
 
