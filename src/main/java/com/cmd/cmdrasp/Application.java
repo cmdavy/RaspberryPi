@@ -1,5 +1,6 @@
 package com.cmd.cmdrasp;
 
+import com.cmd.cmdrasp.configuration.SwaggerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
