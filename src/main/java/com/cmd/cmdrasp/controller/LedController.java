@@ -3,6 +3,7 @@ package com.cmd.cmdrasp.controller;
 import com.pi4j.io.gpio.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.joda.time.LocalDateTime;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -154,7 +155,8 @@ public class LedController {
         init();
 
         int durationInSec = Integer.parseInt(duration);
-        for (int i = 0; i < durationInSec * 5; i++)
+        LocalDateTime startTime = LocalDateTime.now();
+        while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)))
         {
             try {
                 toggle((int)Math.floor(Math.random() * gpioPinDigitalOutputHashMap.size()), gpioPinDigitalOutputHashMap.size());
