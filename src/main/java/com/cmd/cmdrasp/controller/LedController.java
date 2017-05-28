@@ -26,6 +26,8 @@ public class LedController {
     private static GpioPinDigitalOutput redLed;
     private static GpioPinDigitalOutput blueLed;
 
+    private static int danceSpeed = 200;
+
     private HashMap<String, GpioPinDigitalOutput> gpioPinDigitalOutputHashMap = new HashMap<String, GpioPinDigitalOutput>();
 
     private static int count = -1;
@@ -49,7 +51,7 @@ public class LedController {
         }
     }
 
-    @RequestMapping(value="/light", method= RequestMethod.GET)
+    @RequestMapping(value="/light", method= RequestMethod.PUT)
     @ApiOperation(value="Turn this light off and the next light on")
     public String light()
     {
@@ -61,7 +63,7 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping(value="/streetlight/{duration}", method= RequestMethod.GET)
+    @RequestMapping(value="/streetlight/{duration}", method= RequestMethod.PUT)
     @ApiOperation(value="Street Light Simulation - Green, Yellow, Red")
     public String streetlight(@PathVariable("duration") String duration) throws InterruptedException
     {
@@ -110,7 +112,7 @@ public class LedController {
         return asyncResult;
     }
 
-    @RequestMapping(value="/light/{color}/{state}", method= RequestMethod.GET)
+    @RequestMapping(value="/light/{color}/{state}", method= RequestMethod.PUT)
     @ApiOperation(value="Turn this color light off, on, or toggle")
     public String changeLightState(@PathVariable("color") String color, @PathVariable("state") String state)
     {
@@ -142,7 +144,7 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping(value="/dance/{duration}", method= RequestMethod.GET)
+    @RequestMapping(value="/dance/{duration}", method= RequestMethod.PUT)
     @ApiOperation(value="Dance Baby!")
     public String dance(@PathVariable("duration") String duration) throws InterruptedException
     {
@@ -160,7 +162,7 @@ public class LedController {
         {
             try {
                 toggle((int)Math.floor(Math.random() * gpioPinDigitalOutputHashMap.size()), gpioPinDigitalOutputHashMap.size());
-                Thread.sleep(200);
+                Thread.sleep(danceSpeed);
             }
             catch (Exception ex)
             {
@@ -176,8 +178,37 @@ public class LedController {
         return "Done";
     }
 
+    @RequestMapping(value="/dance/faster", method=RequestMethod.PUT)
+    @ApiOperation(value="Speed up!")
+    public String speedUp()
+    {
+        if (danceSpeed > 100)
+        {
+            danceSpeed = danceSpeed - 100;
+        }
+        else
+        {
+            return "We are going as fast as we can Capt'n";
+        }
+        return "Put the pedal to the metal!";
+    }
 
-    @RequestMapping(value="/off", method= RequestMethod.GET)
+    @RequestMapping(value="/dance/slow", method=RequestMethod.PUT)
+    @ApiOperation(value="Slow down")
+    public String slowDown()
+    {
+        if (danceSpeed < 90000)
+        {
+            danceSpeed = danceSpeed + 100;
+        }
+        else
+        {
+            return "We are already watching this train wreck in slow motion!";
+        }
+        return "Whoa there horsey?!";
+    }
+
+    @RequestMapping(value="/off", method= RequestMethod.PUT)
     @ApiOperation(value="Turn all LEDs off!")
     public String turnOff()
     {
