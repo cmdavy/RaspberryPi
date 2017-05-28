@@ -179,7 +179,7 @@ public class LedController {
     }
 
     @RequestMapping(value="/dance/faster", method=RequestMethod.PUT)
-    @ApiOperation(value="Speed up!")
+    @ApiOperation(value="Break it down now!")
     public String speedUp()
     {
         if (!areWeDancing())
@@ -198,14 +198,14 @@ public class LedController {
     }
 
     @RequestMapping(value="/dance/slow", method=RequestMethod.PUT)
-    @ApiOperation(value="Slow down?")
+    @ApiOperation(value="Let's make love tonight?!")
     public String slowDown()
     {
         if (!areWeDancing())
         {
             return "You have to get on the dance floor before you can slow dance! Don't be shy!";
         }
-        if (danceSpeed < 90000)
+        if (danceSpeed < 2000)
         {
             danceSpeed = danceSpeed + 100;
         }
@@ -217,7 +217,7 @@ public class LedController {
     }
 
     @RequestMapping(value="/off", method= RequestMethod.PUT)
-    @ApiOperation(value="Turn all LEDs off!")
+    @ApiOperation(value="You are such a turn off!")
     public String turnOff()
     {
         init();
