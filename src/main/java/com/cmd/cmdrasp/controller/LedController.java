@@ -268,6 +268,7 @@ public class LedController {
         }
         else if (index % count == 3){
             greenLed2.high();
+            return "Green2";
         }
         else
         {
