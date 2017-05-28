@@ -3,6 +3,7 @@ package com.cmd.cmdrasp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -17,6 +18,7 @@ import java.util.concurrent.Executor;
 /**
  * Created by chrisdavy on 5/24/17.
  */
+@Configuration
 @SpringBootApplication
 @EnableAsync
 @EnableSwagger2
@@ -39,9 +41,10 @@ public class Application extends AsyncConfigurerSupport{
     }
 
     @Bean
-    public Docket ledApi() {
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select().apis(RequestHandlerSelectors.any())
+                .select()
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
     }
