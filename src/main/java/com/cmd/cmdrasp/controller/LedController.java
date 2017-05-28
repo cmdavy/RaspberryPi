@@ -55,7 +55,7 @@ public class LedController {
     }
 
     @RequestMapping(value="/light", method= RequestMethod.PUT)
-    @ApiOperation(value="Turn this light off and the next light on")
+    @ApiOperation(value="Move on to the next light")
     public String light()
     {
         init();
@@ -116,7 +116,7 @@ public class LedController {
     }
 
     @RequestMapping(value="/light/{color}/{state}", method= RequestMethod.PUT)
-    @ApiOperation(value="Turn this color light off, on, or toggle")
+    @ApiOperation(value="You have options: Toggle, On, or Off")
     public String changeLightState(@PathVariable("color") String color, @PathVariable("state") String state)
     {
         init();
@@ -201,7 +201,7 @@ public class LedController {
     }
 
     @RequestMapping(value="/dance/slower", method=RequestMethod.PUT)
-    @ApiOperation(value="Let's make love tonight?!")
+    @ApiOperation(value="Ooohhh Yeeeaaaahhhhh?!")
     public String slowDown()
     {
         if (!areWeDancing())
