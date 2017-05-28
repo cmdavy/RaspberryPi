@@ -35,8 +35,11 @@ public class LedController {
     private static String asyncResult = "Not started";
     private static boolean asyncRunning = false;
 
+    private static boolean kill = false;
+
     private void init()
     {
+        kill = false;
         if (greenLed == null || yellowLed == null || redLed == null) {
             GpioController gpioController = GpioFactory.getInstance();
             greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
@@ -77,7 +80,7 @@ public class LedController {
 
         int durationInSec = Integer.parseInt(duration);
         int thisDuration = durationInSec;
-        for (int i = 0; i < thisDuration; i++)
+        for (int i = 0; i < thisDuration && !kill; i++)
         {
             String color = toggle(i, 3);
             try {
@@ -145,7 +148,7 @@ public class LedController {
 
     @Async
     @RequestMapping(value="/dance/{duration}", method= RequestMethod.PUT)
-    @ApiOperation(value="Dance Baby!")
+    @ApiOperation(value="May I have this dance?")
     public String dance(@PathVariable("duration") String duration) throws InterruptedException
     {
         if (asyncRunning)
@@ -158,7 +161,7 @@ public class LedController {
 
         int durationInSec = Integer.parseInt(duration);
         LocalDateTime startTime = LocalDateTime.now();
-        while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)))
+        while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)) && !kill)
         {
             try {
                 toggle((int)Math.floor(Math.random() * gpioPinDigitalOutputHashMap.size()), gpioPinDigitalOutputHashMap.size());
@@ -197,7 +200,7 @@ public class LedController {
         return "Put the pedal to the metal!";
     }
 
-    @RequestMapping(value="/dance/slow", method=RequestMethod.PUT)
+    @RequestMapping(value="/dance/slower", method=RequestMethod.PUT)
     @ApiOperation(value="Let's make love tonight?!")
     public String slowDown()
     {
@@ -223,6 +226,14 @@ public class LedController {
         init();
         resetPins();
         return "All LEDs are off";
+    }
+
+    @RequestMapping(value="/stop", method= RequestMethod.PUT)
+    @ApiOperation(value="STOP...Hammer Time!")
+    public String stop()
+    {
+        kill = true;
+        return "Crickets";
     }
 
     private void resetPins()
