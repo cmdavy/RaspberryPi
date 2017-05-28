@@ -1,4 +1,4 @@
-package com.cmd.cmdrasp.configuration;
+package com.cmd.cmdrasp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
