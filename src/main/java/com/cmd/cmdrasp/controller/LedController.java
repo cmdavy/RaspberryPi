@@ -55,6 +55,7 @@ public class LedController {
 //    }
 
     @RequestMapping("/light")
+    @ApiOperation(value="Toggle light")
     public String light()
     {
         init();
