@@ -182,6 +182,10 @@ public class LedController {
     @ApiOperation(value="Speed up!")
     public String speedUp()
     {
+        if (!areWeDancing())
+        {
+            return "Get on the dance floor first you wallflower!";
+        }
         if (danceSpeed > 100)
         {
             danceSpeed = danceSpeed - 100;
@@ -194,9 +198,13 @@ public class LedController {
     }
 
     @RequestMapping(value="/dance/slow", method=RequestMethod.PUT)
-    @ApiOperation(value="Slow down")
+    @ApiOperation(value="Slow down?")
     public String slowDown()
     {
+        if (!areWeDancing())
+        {
+            return "You have to get on the dance floor before you can slow dance! Don't be shy!";
+        }
         if (danceSpeed < 90000)
         {
             danceSpeed = danceSpeed + 100;
@@ -248,6 +256,15 @@ public class LedController {
             blueLed.high();
             return "Blue";
         }
+    }
+
+    private boolean areWeDancing()
+    {
+        if (asyncResult.contains("Dancing"))
+        {
+            return true;
+        }
+        return false;
     }
 
 }
