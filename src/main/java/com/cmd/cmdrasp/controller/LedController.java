@@ -13,6 +13,7 @@ import java.util.HashMap;
  * Created by chrisdavy on 5/24/17.
  */
 @RestController
+@RequestMapping("/")
 public class LedController {
 
     private static GpioPinDigitalOutput greenLed;
@@ -42,6 +43,7 @@ public class LedController {
             gpioPinDigitalOutputHashMap.put("BLUE", blueLed);
         }
     }
+
 
     @RequestMapping("/")
     public String greeting()
@@ -177,6 +179,12 @@ public class LedController {
         init();
         resetPins();
         return "All LEDs are off";
+    }
+
+    @RequestMapping("/error")
+    public String errorPage()
+    {
+        return "Unicorn!";
     }
 
     private void resetPins()
