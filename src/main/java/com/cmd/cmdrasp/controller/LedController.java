@@ -49,7 +49,7 @@ public class LedController {
     }
 
     @RequestMapping(value="/light", method= RequestMethod.GET)
-    @ApiOperation(value="Toggle light")
+    @ApiOperation(value="Turn this light off and the next light on")
     public String light()
     {
         init();
@@ -60,8 +60,8 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping(value="/streetlight/{duration}")
-    @ApiOperation(value="Street Light Simulation")
+    @RequestMapping(value="/streetlight/{duration}", method= RequestMethod.GET)
+    @ApiOperation(value="Street Light Simulation - Green, Yellow, Red")
     public String streetlight(@PathVariable("duration") String duration) throws InterruptedException
     {
         if (asyncRunning)
@@ -102,13 +102,15 @@ public class LedController {
         return "Done";
     }
 
-    @RequestMapping(value="/result")
+    @RequestMapping(value="/result", method= RequestMethod.GET)
+    @ApiOperation(value="Get the result of the current operation")
     public String getAsyncResult()
     {
         return asyncResult;
     }
 
-    @RequestMapping(value="/light/{color}/{state}")
+    @RequestMapping(value="/light/{color}/{state}", method= RequestMethod.GET)
+    @ApiOperation(value="Turn this color light off, on, or toggle")
     public String changeLightState(@PathVariable("color") String color, @PathVariable("state") String state)
     {
         init();
@@ -139,7 +141,8 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping(value="/dance/{duration}")
+    @RequestMapping(value="/dance/{duration}", method= RequestMethod.GET)
+    @ApiOperation(value="Dance Baby!")
     public String dance(@PathVariable("duration") String duration) throws InterruptedException
     {
         if (asyncRunning)
@@ -172,7 +175,8 @@ public class LedController {
     }
 
 
-    @RequestMapping(value="/off")
+    @RequestMapping(value="/off", method= RequestMethod.GET)
+    @ApiOperation(value="Turn all LEDs off!")
     public String turnOff()
     {
         init();
