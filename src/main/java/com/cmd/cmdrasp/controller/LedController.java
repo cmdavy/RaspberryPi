@@ -266,6 +266,9 @@ public class LedController {
             redLed.high();
             return "Red";
         }
+        else if (index % count == 3){
+            greenLed2.high();
+        }
         else
         {
             blueLed.high();
