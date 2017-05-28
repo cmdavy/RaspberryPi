@@ -15,7 +15,6 @@ import java.util.concurrent.Executor;
  */
 @SpringBootApplication
 @EnableAsync
-@EnableSwagger2
 public class Application extends AsyncConfigurerSupport{
 
     public static void main (String[] args)
