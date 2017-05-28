@@ -1,6 +1,8 @@
 package com.cmd.cmdrasp.controller;
 
 import com.pi4j.io.gpio.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,8 @@ import java.util.HashMap;
  * Created by chrisdavy on 5/24/17.
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/raspi")
+@Api(value="Raspberry Pi Led Application")
 public class LedController {
 
     private static GpioPinDigitalOutput greenLed;
@@ -63,6 +66,7 @@ public class LedController {
 
     @Async
     @RequestMapping("/streetlight/{duration}")
+    @ApiOperation(value="Street Light Simulation")
     public String streetlight(@PathVariable("duration") String duration) throws InterruptedException
     {
         if (asyncRunning)
