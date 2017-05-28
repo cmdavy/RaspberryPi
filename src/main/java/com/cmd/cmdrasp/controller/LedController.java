@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -47,14 +48,7 @@ public class LedController {
         }
     }
 
-
-//    @RequestMapping("/")
-//    public String greeting()
-//    {
-//        return "Hello World!";
-//    }
-
-    @RequestMapping("/light")
+    @RequestMapping(value="/light", method= RequestMethod.GET)
     @ApiOperation(value="Toggle light")
     public String light()
     {
@@ -66,7 +60,7 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping("/streetlight/{duration}")
+    @RequestMapping(value="/streetlight/{duration}")
     @ApiOperation(value="Street Light Simulation")
     public String streetlight(@PathVariable("duration") String duration) throws InterruptedException
     {
@@ -108,13 +102,13 @@ public class LedController {
         return "Done";
     }
 
-    @RequestMapping("/result")
+    @RequestMapping(value="/result")
     public String getAsyncResult()
     {
         return asyncResult;
     }
 
-    @RequestMapping("/light/{color}/{state}")
+    @RequestMapping(value="/light/{color}/{state}")
     public String changeLightState(@PathVariable("color") String color, @PathVariable("state") String state)
     {
         init();
@@ -145,7 +139,7 @@ public class LedController {
     }
 
     @Async
-    @RequestMapping("/dance/{duration}")
+    @RequestMapping(value="/dance/{duration}")
     public String dance(@PathVariable("duration") String duration) throws InterruptedException
     {
         if (asyncRunning)
@@ -178,18 +172,12 @@ public class LedController {
     }
 
 
-    @RequestMapping("/off")
+    @RequestMapping(value="/off")
     public String turnOff()
     {
         init();
         resetPins();
         return "All LEDs are off";
-    }
-
-    @RequestMapping("/error")
-    public String errorPage()
-    {
-        return "Unicorn!";
     }
 
     private void resetPins()
