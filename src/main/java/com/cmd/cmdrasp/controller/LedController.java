@@ -224,6 +224,7 @@ public class LedController {
     public String turnOff()
     {
         init();
+        kill = true;
         resetPins();
         return "All LEDs are off";
     }
@@ -232,7 +233,6 @@ public class LedController {
     @ApiOperation(value="STOP...Hammer Time!")
     public String stop()
     {
-        kill = true;
         turnOff();
         return "Crickets";
     }
