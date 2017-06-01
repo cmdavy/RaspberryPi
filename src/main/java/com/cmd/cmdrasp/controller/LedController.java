@@ -346,7 +346,6 @@ public class LedController {
                         gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, "Led", PinState.HIGH);
                         break;
                 }
-                gpioController.high();
                 Thread.sleep(danceSpeed);
                 gpioController.low();
             }
