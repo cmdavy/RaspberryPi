@@ -359,6 +359,9 @@ public class LedController {
         resetPins();
         asyncResult = "Done";
         asyncRunning = false;
+        gpioPinDigitalOutput = null;
+        gpioController = null;
+        init();
         return "Done";
     }
 
