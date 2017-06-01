@@ -353,7 +353,7 @@ public class LedController {
                 return ex.getMessage();
             }
 
-            asyncResult = String.format("Dancing until %s...", startTime.plusSeconds(durationInSec).toString());
+            asyncResult = String.format("Looping through LED %d of 27", i);
         }
         resetPins();
         asyncResult = "Done";
