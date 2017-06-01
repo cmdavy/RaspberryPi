@@ -274,6 +274,7 @@ public class LedController {
             {
                 if (gpioController.getProvisionedPins().contains(raspiPin)) {
                     gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin);
+                    gpioPinDigitalOutput.high();
                 }
                 else {
                     gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "Led", PinState.HIGH);
