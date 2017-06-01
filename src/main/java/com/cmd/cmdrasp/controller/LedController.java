@@ -272,7 +272,12 @@ public class LedController {
             }
             try
             {
-                gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "Led", PinState.HIGH);
+                if (gpioController.getProvisionedPins().contains(raspiPin)) {
+                    gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin);
+                }
+                else {
+                    gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "Led", PinState.HIGH);
+                }
                 Thread.sleep(danceSpeed);
                 gpioPinDigitalOutput.low();
             }
