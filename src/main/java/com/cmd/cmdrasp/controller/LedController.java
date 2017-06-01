@@ -242,6 +242,8 @@ public class LedController {
     @ApiOperation(value="Looper")
     public String loopThroughGPIO()
     {
+        init();
+
         kill = false;
         if (asyncRunning)
         {
@@ -256,7 +258,7 @@ public class LedController {
         blueLed = null;
 
         GpioController gpioController = GpioFactory.getInstance();
-        GpioPinDigitalOutput gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
+        GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;// gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
 
         for (int i = 0; i <= 27 && !kill; i++)
         {
@@ -267,10 +269,10 @@ public class LedController {
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led", PinState.HIGH);
                         break;
                     case 2:
-                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = redLed; // gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
                         break;
                     case 3:
-                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = blueLed; // gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
                         break;
                     case 4:
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Led", PinState.HIGH);
@@ -282,7 +284,7 @@ public class LedController {
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Led", PinState.HIGH);
                         break;
                     case 7:
-                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = greenLed; // gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Led", PinState.HIGH);
                         break;
                     case 8:
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_08, "Led", PinState.HIGH);
