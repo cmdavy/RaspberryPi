@@ -249,7 +249,11 @@ public class LedController {
         }
         asyncRunning = true;
         asyncResult = "Looping...";
-        init();
+
+        greenLed = null;
+        redLed = null;
+        yellowLed = null;
+        blueLed = null;
 
         for (int i = 0; i <= 27 && !kill; i++)
         {
