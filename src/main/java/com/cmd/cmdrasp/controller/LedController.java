@@ -356,12 +356,12 @@ public class LedController {
 
             asyncResult = String.format("Looping through LED %d of 27", i);
         }
-        resetPins();
         asyncResult = "Done";
         asyncRunning = false;
         gpioPinDigitalOutput = null;
         gpioController = null;
         init();
+        resetPins();
         return "Done";
     }
 
