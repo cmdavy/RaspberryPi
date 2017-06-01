@@ -252,11 +252,6 @@ public class LedController {
         asyncRunning = true;
         asyncResult = "Looping...";
 
-        greenLed = null;
-        redLed = null;
-        yellowLed = null;
-        blueLed = null;
-
         GpioController gpioController = GpioFactory.getInstance();
         GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;
 
@@ -292,9 +287,6 @@ public class LedController {
         }
         asyncResult = "Done";
         asyncRunning = false;
-        gpioPinDigitalOutput = null;
-        gpioController = null;
-        init();
         resetPins();
         return "Done";
     }
