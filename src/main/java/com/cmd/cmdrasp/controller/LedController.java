@@ -237,6 +237,130 @@ public class LedController {
         return "Crickets";
     }
 
+    @Async
+    @RequestMapping(value="/loop", method= RequestMethod.PUT)
+    @ApiOperation(value="Looper")
+    public String loopThroughGPIO()
+    {
+        if (asyncRunning)
+        {
+            return "Busy...";
+        }
+        asyncRunning = true;
+        asyncResult = "Looping...";
+        init();
+
+        LocalDateTime startTime = LocalDateTime.now();
+        GpioController gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
+
+        for (int i = 0; i <= 27 && !kill; i++)
+        {
+
+            try {
+                switch(i)
+                {
+                    case 0:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
+                        break;
+                    case 1:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led", PinState.HIGH);
+                        break;
+                    case 2:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
+                        break;
+                    case 3:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
+                        break;
+                    case 4:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Led", PinState.HIGH);
+                        break;
+                    case 5:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_05, "Led", PinState.HIGH);
+                        break;
+                    case 6:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Led", PinState.HIGH);
+                        break;
+                    case 7:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Led", PinState.HIGH);
+                        break;
+                    case 8:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_08, "Led", PinState.HIGH);
+                        break;
+                    case 9:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_09, "Led", PinState.HIGH);
+                        break;
+                    case 10:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_10, "Led", PinState.HIGH);
+                        break;
+                    case 11:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_11, "Led", PinState.HIGH);
+                        break;
+                    case 12:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_12, "Led", PinState.HIGH);
+                        break;
+                    case 13:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Led", PinState.HIGH);
+                        break;
+                    case 14:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_14, "Led", PinState.HIGH);
+                        break;
+                    case 15:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Led", PinState.HIGH);
+                        break;
+                    case 16:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_16, "Led", PinState.HIGH);
+                        break;
+                    case 17:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_17, "Led", PinState.HIGH);
+                        break;
+                    case 18:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_18, "Led", PinState.HIGH);
+                        break;
+                    case 19:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_19, "Led", PinState.HIGH);
+                        break;
+                    case 20:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_20, "Led", PinState.HIGH);
+                        break;
+                    case 21:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_21, "Led", PinState.HIGH);
+                        break;
+                    case 22:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Led", PinState.HIGH);
+                        break;
+                    case 23:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Led", PinState.HIGH);
+                        break;
+                    case 24:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Led", PinState.HIGH);
+                        break;
+                    case 25:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Led", PinState.HIGH);
+                        break;
+                    case 26:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Led", PinState.HIGH);
+                        break;
+                    case 27:
+                        gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, "Led", PinState.HIGH);
+                        break;
+                }
+                Thread.sleep(danceSpeed);
+                gpioController.low();
+            }
+            catch (Exception ex)
+            {
+                asyncResult = ex.getMessage();
+                return ex.getMessage();
+            }
+
+            asyncResult = String.format("Dancing until %s...", startTime.plusSeconds(durationInSec).toString());
+        }
+        resetPins();
+        asyncResult = "Done";
+        asyncRunning = false;
+        return "Done";
+    }
+
     private void resetPins()
     {
         greenLed.low();
