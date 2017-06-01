@@ -267,82 +267,82 @@ public class LedController {
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led", PinState.HIGH);
                         break;
                     case 2:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
                         break;
                     case 3:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
                         break;
                     case 4:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Led", PinState.HIGH);
                         break;
                     case 5:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_05, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_05, "Led", PinState.HIGH);
                         break;
                     case 6:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Led", PinState.HIGH);
                         break;
                     case 7:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Led", PinState.HIGH);
                         break;
                     case 8:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_08, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_08, "Led", PinState.HIGH);
                         break;
                     case 9:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_09, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_09, "Led", PinState.HIGH);
                         break;
                     case 10:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_10, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_10, "Led", PinState.HIGH);
                         break;
                     case 11:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_11, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_11, "Led", PinState.HIGH);
                         break;
                     case 12:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_12, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_12, "Led", PinState.HIGH);
                         break;
                     case 13:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Led", PinState.HIGH);
                         break;
                     case 14:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_14, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_14, "Led", PinState.HIGH);
                         break;
                     case 15:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Led", PinState.HIGH);
                         break;
                     case 16:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_16, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_16, "Led", PinState.HIGH);
                         break;
                     case 17:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_17, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_17, "Led", PinState.HIGH);
                         break;
                     case 18:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_18, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_18, "Led", PinState.HIGH);
                         break;
                     case 19:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_19, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_19, "Led", PinState.HIGH);
                         break;
                     case 20:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_20, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_20, "Led", PinState.HIGH);
                         break;
                     case 21:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_21, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_21, "Led", PinState.HIGH);
                         break;
                     case 22:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Led", PinState.HIGH);
                         break;
                     case 23:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Led", PinState.HIGH);
                         break;
                     case 24:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Led", PinState.HIGH);
                         break;
                     case 25:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Led", PinState.HIGH);
                         break;
                     case 26:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Led", PinState.HIGH);
                         break;
                     case 27:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, "Led", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, "Led", PinState.HIGH);
                         break;
                 }
                 Thread.sleep(danceSpeed);
