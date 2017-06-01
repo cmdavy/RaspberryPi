@@ -255,9 +255,10 @@ public class LedController {
         yellowLed = null;
         blueLed = null;
 
+        GpioController gpioController = GpioFactory.getInstance();
+
         for (int i = 0; i <= 27 && !kill; i++)
         {
-            GpioController gpioController = GpioFactory.getInstance();
             try {
                 switch(i)
                 {
@@ -265,10 +266,10 @@ public class LedController {
                         gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
                         break;
                     case 1:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led", PinState.HIGH);
+                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led1", PinState.HIGH);
                         break;
                     case 2:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
+                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led2", PinState.HIGH);
                         break;
                     case 3:
                         gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
@@ -351,7 +352,7 @@ public class LedController {
             }
             catch (Exception ex)
             {
-                asyncResult = ex.getMessage();
+                asyncResult = "[" + i + "]" + ex.getMessage();
                 return ex.getMessage();
             }
 
