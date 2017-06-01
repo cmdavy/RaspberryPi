@@ -242,6 +242,7 @@ public class LedController {
     @ApiOperation(value="Looper")
     public String loopThroughGPIO()
     {
+        kill = false;
         if (asyncRunning)
         {
             return "Busy...";
@@ -250,12 +251,11 @@ public class LedController {
         asyncResult = "Looping...";
         init();
 
-        LocalDateTime startTime = LocalDateTime.now();
-        GpioController gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
+        GpioController gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.LOW);
 
         for (int i = 0; i <= 27 && !kill; i++)
         {
-
+            gpioController = null;
             try {
                 switch(i)
                 {
@@ -344,6 +344,7 @@ public class LedController {
                         gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, "Led", PinState.HIGH);
                         break;
                 }
+                gpioController.high();
                 Thread.sleep(danceSpeed);
                 gpioController.low();
             }
