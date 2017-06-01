@@ -258,7 +258,7 @@ public class LedController {
         blueLed = null;
 
         GpioController gpioController = GpioFactory.getInstance();
-        GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;// gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
+        GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;
 
         for (int i = 0; i <= 27 && !kill; i++) {
             Pin raspiPin;
