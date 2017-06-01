@@ -256,20 +256,18 @@ public class LedController {
         blueLed = null;
 
         GpioController gpioController = GpioFactory.getInstance();
+        GpioPinDigitalOutput gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
 
         for (int i = 0; i <= 27 && !kill; i++)
         {
             try {
                 switch(i)
                 {
-                    case 0:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.HIGH);
-                        break;
                     case 1:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led1", PinState.HIGH);
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led", PinState.HIGH);
                         break;
                     case 2:
-                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led2", PinState.HIGH);
+                        gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Led", PinState.HIGH);
                         break;
                     case 3:
                         gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Led", PinState.HIGH);
@@ -348,7 +346,7 @@ public class LedController {
                         break;
                 }
                 Thread.sleep(danceSpeed);
-                gpioController.low();
+                gpioPinDigitalOutput.low();
             }
             catch (Exception ex)
             {
