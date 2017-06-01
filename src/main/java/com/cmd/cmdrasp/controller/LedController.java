@@ -265,6 +265,8 @@ public class LedController {
             try {
                 switch(i)
                 {
+                    case 0:
+                        gpioPinDigitalOutput = yellowLed;
                     case 1:
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Led", PinState.HIGH);
                         break;
@@ -347,6 +349,7 @@ public class LedController {
                         gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_27, "Led", PinState.HIGH);
                         break;
                 }
+                gpioPinDigitalOutput.high();
                 Thread.sleep(danceSpeed);
                 gpioPinDigitalOutput.low();
             }
