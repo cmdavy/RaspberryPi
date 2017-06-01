@@ -251,11 +251,9 @@ public class LedController {
         asyncResult = "Looping...";
         init();
 
-        GpioController gpioController = GpioFactory.getInstance();gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Led", PinState.LOW);
-
         for (int i = 0; i <= 27 && !kill; i++)
         {
-            gpioController = null;
+            GpioController gpioController = GpioFactory.getInstance();
             try {
                 switch(i)
                 {
