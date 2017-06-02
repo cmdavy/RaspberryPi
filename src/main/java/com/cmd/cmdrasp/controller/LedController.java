@@ -287,7 +287,7 @@ public class LedController {
             }
             catch (Exception ex)
             {
-                asyncResult = "[" + i + "]" + ex.getMessage();
+                asyncResult = "[" + raspiPin.getName() + "]" + ex.getMessage();
                 ex.printStackTrace();
                 return ex.getMessage();
             }
