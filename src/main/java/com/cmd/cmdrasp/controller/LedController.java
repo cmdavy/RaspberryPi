@@ -263,7 +263,7 @@ public class LedController {
                 } else {
                     raspiPin = RaspiPin.getPinByName("GPIO_" + i);
                 }
-                System.out.println("RaspiPin " + i)
+                System.out.println("RaspiPin " + i);
                 if (gpioController.getProvisionedPins().contains(raspiPin)) {
                     Iterator pinIterator = gpioController.getProvisionedPins().iterator();
                     while (pinIterator.hasNext())
