@@ -273,23 +273,18 @@ public class LedController {
 
             boolean found = false;
 
-            GpioPinDigitalOutput[] outputs = (GpioPinDigitalOutput[]) gpioController.getProvisionedPins().toArray();
-            for (int j = 0; j < outputs.length; j++)
+            Pin[] provisionedPins = (Pin[]) gpioController.getProvisionedPins().toArray();
+            for (int j = 0; j < provisionedPins.length; j++)
             {
-                if (outputs[j].getName().equals(pin.getName()))
+                if (provisionedPins[j].getName().equals(pin.getName()))
                 {
-                    led = outputs[j];
-                    found = true;
+                    gpioController.unprovisionPin((GpioPin)pin);
                     break;
                 }
             }
 
-            if (!found)
-            {
-                led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.LOW);
-            }
+            led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
 
-            led.high();
             asyncResult = String.format("Looping through LED %d of 27", i);
 
             try {
@@ -302,7 +297,6 @@ public class LedController {
 
         asyncResult = "Done";
         asyncRunning = false;
-        resetPins();
         return "Done";
     }
 
