@@ -256,7 +256,7 @@ public class LedController {
         GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;
 
         for (int i = 0; i <= 27 && !kill; i++) {
-            Pin raspiPin;
+            Pin raspiPin = RaspiPin.GPIO_00;
             try {
                 if (i < 10) {
                     raspiPin = RaspiPin.getPinByName("GPIO_0" + i);
