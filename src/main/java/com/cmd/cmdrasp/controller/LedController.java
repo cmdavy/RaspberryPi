@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -273,14 +274,9 @@ public class LedController {
 
             boolean found = false;
 
-            Pin[] provisionedPins = (Pin[]) gpioController.getProvisionedPins().toArray();
-            for (int j = 0; j < provisionedPins.length; j++)
+            if (gpioController.getProvisionedPins().contains(pin))
             {
-                if (provisionedPins[j].getName().equals(pin.getName()))
-                {
-                    gpioController.unprovisionPin((GpioPin)pin);
-                    break;
-                }
+                gpioController.unprovisionPin((GpioPin)pin);
             }
 
             led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
