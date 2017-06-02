@@ -134,6 +134,7 @@ public class LedController {
             if (state.toLowerCase().equals("toggle"))
             {
                 thisPin.toggle();
+                System.out.println("DEBUG: Name = " + thisPin.getName());
                 return String.format("%s LED is %s", color, thisPin.getState().toString());
             }
             else {
@@ -263,7 +264,7 @@ public class LedController {
                 } else {
                     raspiPin = RaspiPin.getPinByName("GPIO_" + i);
                 }
-                
+
                 if (raspiPin == null)
                 {
                     System.out.println("RaspiPin is null");
@@ -279,11 +280,11 @@ public class LedController {
                             }
                         }
                     } else {
-                        if (i < 10) {
-                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_0" + i, PinState.HIGH);
-                        } else {
-                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_" + i, PinState.HIGH);
-                        }
+//                        if (i < 10) {
+//                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_0" + i, PinState.HIGH);
+//                        } else {
+//                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_" + i, PinState.HIGH);
+//                        }
                     }
                     Thread.sleep(danceSpeed);
                     gpioPinDigitalOutput.low();
