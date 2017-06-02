@@ -134,8 +134,7 @@ public class LedController {
             if (state.toLowerCase().equals("toggle"))
             {
                 thisPin.toggle();
-                System.out.println("DEBUG: Name = " + thisPin.getName());
-                return String.format("%s LED is %s", color, thisPin.getState().toString());
+                return String.format("%s LED is %s", thisPin.getName(), thisPin.getState().toString());
             }
             else {
                 thisPin.setState(pinState);
