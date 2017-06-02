@@ -271,23 +271,22 @@ public class LedController {
             Pin pin = (Pin) pinMap.get(i);
             GpioPinDigitalOutput led = redLed;
 
-            if (!gpioController.getProvisionedPins().contains(pin))
-            {
+            boolean found = false;
 
-                led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.LOW);
-            }
-            else
+            GpioPinDigitalOutput[] outputs = (GpioPinDigitalOutput[]) gpioController.getProvisionedPins().toArray();
+            for (int j = 0; j < outputs.length; j++)
             {
-                GpioPinDigitalOutput[] outputs = (GpioPinDigitalOutput[]) gpioController.getProvisionedPins().toArray();
-                for (int j = 0; j < outputs.length; j++)
+                if (outputs[j].getName().equals(pin.getName()))
                 {
-                    if (outputs[j].getName().equals(pin.getName()))
-                    {
-                        led = outputs[j];
-                        break;
-                    }
+                    led = outputs[j];
+                    found = true;
+                    break;
                 }
+            }
 
+            if (!found)
+            {
+                led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.LOW);
             }
 
             led.high();
@@ -300,7 +299,7 @@ public class LedController {
             }
             led.low();
         }
-        
+
         asyncResult = "Done";
         asyncRunning = false;
         resetPins();
