@@ -257,18 +257,13 @@ public class LedController {
 
         for (int i = 0; i <= 27 && !kill; i++) {
             Pin raspiPin;
-            if (i < 10)
-            {
-                raspiPin = RaspiPin.getPinByName("GPIO_0" + i);
-            }
-            else
-            {
-                raspiPin = RaspiPin.getPinByName("GPIO_" + i);
-            }
-            try
-            {
+            try {
+                if (i < 10) {
+                    raspiPin = RaspiPin.getPinByName("GPIO_0" + i);
+                } else {
+                    raspiPin = RaspiPin.getPinByName("GPIO_" + i);
+                }
                 if (gpioController.getProvisionedPins().contains(raspiPin)) {
-                    // TODO - this doesn't get the provisioned pin
                     Iterator pinIterator = gpioController.getProvisionedPins().iterator();
                     while (pinIterator.hasNext())
                     {
