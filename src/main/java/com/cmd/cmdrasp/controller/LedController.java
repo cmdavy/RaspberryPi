@@ -263,33 +263,31 @@ public class LedController {
                 } else {
                     raspiPin = RaspiPin.getPinByName("GPIO_" + i);
                 }
+                
                 if (raspiPin == null)
                 {
                     System.out.println("RaspiPin is null");
                 }
-                System.out.println("RaspiPin " + i);
-                if (gpioController.getProvisionedPins().contains(raspiPin)) {
-                    Iterator pinIterator = gpioController.getProvisionedPins().iterator();
-                    while (pinIterator.hasNext())
-                    {
-                        gpioPinDigitalOutput = (GpioPinDigitalOutput) pinIterator.next();
-                        if (gpioPinDigitalOutput.equals(raspiPin))
-                        {
-                            gpioPinDigitalOutput.high();
+                else {
+                    System.out.println("RaspiPin " + i);
+                    if (gpioController.getProvisionedPins().contains(raspiPin)) {
+                        Iterator pinIterator = gpioController.getProvisionedPins().iterator();
+                        while (pinIterator.hasNext()) {
+                            gpioPinDigitalOutput = (GpioPinDigitalOutput) pinIterator.next();
+                            if (gpioPinDigitalOutput.equals(raspiPin)) {
+                                gpioPinDigitalOutput.high();
+                            }
+                        }
+                    } else {
+                        if (i < 10) {
+                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_0" + i, PinState.HIGH);
+                        } else {
+                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_" + i, PinState.HIGH);
                         }
                     }
+                    Thread.sleep(danceSpeed);
+                    gpioPinDigitalOutput.low();
                 }
-                else {
-                    if (i < 10) {
-                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_0" + i, PinState.HIGH);
-                    }
-                    else
-                    {
-                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_" + i, PinState.HIGH);
-                    }
-                }
-                Thread.sleep(danceSpeed);
-                gpioPinDigitalOutput.low();
             }
             catch (Exception ex)
             {
