@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 /**
@@ -244,7 +245,6 @@ public class LedController {
     {
         init();
 
-        kill = false;
         if (asyncRunning)
         {
             return "Busy...";
@@ -268,8 +268,16 @@ public class LedController {
             try
             {
                 if (gpioController.getProvisionedPins().contains(raspiPin)) {
-                    gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin);
-                    gpioPinDigitalOutput.high();
+                    // TODO - this doesn't get the provisioned pin
+                    Iterator pinIterator = gpioController.getProvisionedPins().iterator();
+                    while (pinIterator.hasNext())
+                    {
+                        gpioPinDigitalOutput = (GpioPinDigitalOutput) pinIterator.next();
+                        if (gpioPinDigitalOutput.equals(raspiPin))
+                        {
+                            gpioPinDigitalOutput.high();
+                        }
+                    }
                 }
                 else {
                     gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "Led", PinState.HIGH);
@@ -280,6 +288,7 @@ public class LedController {
             catch (Exception ex)
             {
                 asyncResult = "[" + i + "]" + ex.getMessage();
+                ex.printStackTrace();
                 return ex.getMessage();
             }
 
