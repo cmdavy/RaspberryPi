@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -38,20 +39,30 @@ public class LedController {
 
     private static boolean kill = false;
 
+    private Map pinMap = new HashMap<Integer, RaspiPin>();
+
+
     private void init()
     {
         kill = false;
         if (greenLed == null || yellowLed == null || redLed == null) {
             GpioController gpioController = GpioFactory.getInstance();
-            greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
             yellowLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Yellow", PinState.LOW);
             redLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
             blueLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Blue", PinState.LOW);
+            greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
 
             gpioPinDigitalOutputHashMap.put("GREEN", greenLed);
             gpioPinDigitalOutputHashMap.put("YELLOW", yellowLed);
             gpioPinDigitalOutputHashMap.put("RED", redLed);
             gpioPinDigitalOutputHashMap.put("BLUE", blueLed);
+        }
+
+        if (pinMap.size() == 0) {
+            pinMap.put(0, RaspiPin.GPIO_00);
+            pinMap.put(1, RaspiPin.GPIO_01);
+            pinMap.put(2, RaspiPin.GPIO_02);
+            pinMap.put(3, RaspiPin.GPIO_03);
         }
     }
 
@@ -255,49 +266,41 @@ public class LedController {
         GpioController gpioController = GpioFactory.getInstance();
         GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;
 
-        for (int i = 0; i <= 27 && !kill; i++) {
-            Pin raspiPin;
-            try {
-                if (i < 10) {
-                    raspiPin = RaspiPin.getPinByName("GPIO_0" + i);
-                } else {
-                    raspiPin = RaspiPin.getPinByName("GPIO_" + i);
-                }
+        for (int i = 0; i < pinMap.size(); i++)
+        {
+            Pin pin = (Pin) pinMap.get(i);
+            GpioPinDigitalOutput led = redLed;
 
-                if (raspiPin == null)
-                {
-                    System.out.println("RaspiPin is null");
-                }
-                else {
-                    System.out.println("RaspiPin " + i);
-                    if (gpioController.getProvisionedPins().contains(raspiPin)) {
-                        Iterator pinIterator = gpioController.getProvisionedPins().iterator();
-                        while (pinIterator.hasNext()) {
-                            gpioPinDigitalOutput = (GpioPinDigitalOutput) pinIterator.next();
-                            if (gpioPinDigitalOutput.equals(raspiPin)) {
-                                gpioPinDigitalOutput.high();
-                            }
-                        }
-                    } else {
-//                        if (i < 10) {
-//                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_0" + i, PinState.HIGH);
-//                        } else {
-//                            gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_" + i, PinState.HIGH);
-//                        }
-                    }
-                    Thread.sleep(danceSpeed);
-                    gpioPinDigitalOutput.low();
-                }
-            }
-            catch (Exception ex)
+            if (!gpioController.getProvisionedPins().contains(pin))
             {
-                asyncResult = "[" + i + "]" + ex.getMessage();
-                ex.printStackTrace();
-                return ex.getMessage();
+
+                led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.LOW);
+            }
+            else
+            {
+                GpioPinDigitalOutput[] outputs = (GpioPinDigitalOutput[]) gpioController.getProvisionedPins().toArray();
+                for (int j = 0; j < outputs.length; j++)
+                {
+                    if (outputs[j].getName().equals(pin.getName()))
+                    {
+                        led = outputs[j];
+                        break;
+                    }
+                }
+
             }
 
+            led.high();
             asyncResult = String.format("Looping through LED %d of 27", i);
+
+            try {
+                Thread.sleep(danceSpeed);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            led.low();
         }
+        
         asyncResult = "Done";
         asyncRunning = false;
         resetPins();
