@@ -256,7 +256,7 @@ public class LedController {
         GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;
 
         for (int i = 0; i <= 27 && !kill; i++) {
-            Pin raspiPin = RaspiPin.GPIO_00;
+            Pin raspiPin;
             try {
                 if (i < 10) {
                     raspiPin = RaspiPin.getPinByName("GPIO_0" + i);
@@ -275,14 +275,20 @@ public class LedController {
                     }
                 }
                 else {
-                    gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "Led", PinState.HIGH);
+                    if (i < 10) {
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_0" + i, PinState.HIGH);
+                    }
+                    else
+                    {
+                        gpioPinDigitalOutput = gpioController.provisionDigitalOutputPin(raspiPin, "GPIO_" + i, PinState.HIGH);
+                    }
                 }
                 Thread.sleep(danceSpeed);
                 gpioPinDigitalOutput.low();
             }
             catch (Exception ex)
             {
-                asyncResult = "[" + raspiPin.getName() + "]" + ex.getMessage();
+                asyncResult = "[" + i + "]" + ex.getMessage();
                 ex.printStackTrace();
                 return ex.getMessage();
             }
