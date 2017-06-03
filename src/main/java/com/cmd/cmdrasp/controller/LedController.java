@@ -255,8 +255,6 @@ public class LedController {
     @ApiOperation(value="Looper")
     public String loopThroughGPIO()
     {
-        init();
-
         if (asyncRunning)
         {
             return "Busy...";
@@ -265,21 +263,20 @@ public class LedController {
         asyncResult = "Looping...";
 
         GpioController gpioController = GpioFactory.getInstance();
-        GpioPinDigitalOutput gpioPinDigitalOutput = yellowLed;
+
+        Collection<GpioPin> pins = gpioController.getProvisionedPins();
+        Iterator<GpioPin> pinIterator = pins.iterator();
+        while (pinIterator.hasNext())
+        {
+            GpioPin pin = pinIterator.next();
+            gpioController.unprovisionPin(pin);
+        }
 
         for (int i = 0; i < pinMap.size(); i++)
         {
             Pin pin = (Pin) pinMap.get(i);
-            GpioPinDigitalOutput led = redLed;
 
-            boolean found = false;
-
-            if (gpioController.getProvisionedPins().contains(pin))
-            {
-                gpioController.unprovisionPin((GpioPin)pin);
-            }
-
-            led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
+            GpioPinDigitalOutput led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
 
             asyncResult = String.format("Looping through LED %d of 27", i);
 
