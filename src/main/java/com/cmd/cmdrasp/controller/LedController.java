@@ -56,8 +56,8 @@ public class LedController {
             blueLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Blue", PinState.LOW);
             greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
             greenLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Green2", PinState.LOW);
-            yellowLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Yellow2", PinState.LOW);
-            redLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Red2", PinState.LOW);
+            yellowLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_05, "Yellow2", PinState.LOW);
+            redLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Red2", PinState.LOW);
 
             gpioPinDigitalOutputHashMap.put("GREEN", greenLed);
             gpioPinDigitalOutputHashMap.put("YELLOW", yellowLed);
