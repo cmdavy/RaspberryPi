@@ -278,7 +278,8 @@ public class LedController {
             {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
-                return "An exception occurred while unprovisioning pins.\nDetail: " + ex.getMessage();
+                asyncResult = "An exception occurred while unprovisioning pins.\nDetail: " + ex.getMessage();
+                return asyncResult;
             }
         }
 
@@ -300,7 +301,8 @@ public class LedController {
             }
             catch (Exception ex)
             {
-                return String.format("An exception occurred while processing pin at index %d.\nDetail: %s", i, ex.getMessage());
+                asyncResult = String.format("An exception occurred while processing pin at index %d.\nDetail: %s", i, ex.getMessage());
+                return asyncResult;
             }
         }
 
