@@ -262,6 +262,8 @@ public class LedController {
         asyncRunning = true;
         asyncResult = "Looping...";
 
+        init();
+
         GpioController gpioController = GpioFactory.getInstance();
 
         Collection<GpioPin> pins = gpioController.getProvisionedPins();
