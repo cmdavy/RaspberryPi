@@ -28,6 +28,7 @@ public class LedController {
     private static GpioPinDigitalOutput yellowLed;
     private static GpioPinDigitalOutput redLed;
     private static GpioPinDigitalOutput blueLed;
+    private static GpioPinDigitalOutput testLed;
 
     private static int danceSpeed = 200;
 
@@ -52,11 +53,13 @@ public class LedController {
             redLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
             blueLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Blue", PinState.LOW);
             greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
+            testLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Test", PinState.LOW);
 
             gpioPinDigitalOutputHashMap.put("GREEN", greenLed);
             gpioPinDigitalOutputHashMap.put("YELLOW", yellowLed);
             gpioPinDigitalOutputHashMap.put("RED", redLed);
             gpioPinDigitalOutputHashMap.put("BLUE", blueLed);
+            gpioPinDigitalOutputHashMap.put("TEST", testLed);
         }
 
         if (pinMap.size() == 0) {
