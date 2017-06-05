@@ -28,8 +28,9 @@ public class LedController {
     private static GpioPinDigitalOutput yellowLed;
     private static GpioPinDigitalOutput redLed;
     private static GpioPinDigitalOutput blueLed;
-    private static GpioPinDigitalOutput test3VLed;
-    private static GpioPinDigitalOutput test5VLed;
+    private static GpioPinDigitalOutput greenLed2;
+    private static GpioPinDigitalOutput yellowLed2;
+    private static GpioPinDigitalOutput redLed2;
 
     private static int danceSpeed = 200;
 
@@ -54,15 +55,17 @@ public class LedController {
             redLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Red", PinState.LOW);
             blueLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_03, "Blue", PinState.LOW);
             greenLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, "Green", PinState.LOW);
-            test3VLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Test3V", PinState.LOW);
-            test5VLed = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_05, "Test5V", PinState.LOW);
+            greenLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Green2", PinState.LOW);
+            yellowLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Yellow2", PinState.LOW);
+            redLed2 = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_04, "Red2", PinState.LOW);
 
             gpioPinDigitalOutputHashMap.put("GREEN", greenLed);
             gpioPinDigitalOutputHashMap.put("YELLOW", yellowLed);
             gpioPinDigitalOutputHashMap.put("RED", redLed);
             gpioPinDigitalOutputHashMap.put("BLUE", blueLed);
-            gpioPinDigitalOutputHashMap.put("TEST3V", test3VLed);
-            gpioPinDigitalOutputHashMap.put("TEST5V", test5VLed);
+            gpioPinDigitalOutputHashMap.put("GREEN2", greenLed2);
+            gpioPinDigitalOutputHashMap.put("YELLOW2", yellowLed2);
+            gpioPinDigitalOutputHashMap.put("RED2", redLed2);
         }
 
         if (pinMap.size() == 0) {
