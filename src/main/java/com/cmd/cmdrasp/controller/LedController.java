@@ -268,24 +268,38 @@ public class LedController {
         Iterator<GpioPin> pinIterator = pins.iterator();
         while (pinIterator.hasNext())
         {
-            GpioPin pin = pinIterator.next();
-            gpioController.unprovisionPin(pin);
+            try {
+                GpioPin pin = pinIterator.next();
+                gpioController.unprovisionPin(pin);
+            }
+            catch (Exception ex)
+            {
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                return "An exception occurred while unprovisioning pins.\nDetail: " + ex.getMessage();
+            }
         }
 
         for (int i = 0; i < pinMap.size(); i++)
         {
-            Pin pin = (Pin) pinMap.get(i);
-
-            GpioPinDigitalOutput led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
-
-            asyncResult = String.format("Looping through LED %d of 27", i);
-
             try {
-                Thread.sleep(danceSpeed);
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                Pin pin = (Pin) pinMap.get(i);
+
+                GpioPinDigitalOutput led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
+
+                asyncResult = String.format("Looping through LED %d of 27", i);
+
+                try {
+                    Thread.sleep(danceSpeed);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+                led.low();
             }
-            led.low();
+            catch (Exception ex)
+            {
+                return String.format("An exception occurred while processing pin at index %d.\nDetail: %s", i, ex.getMessage());
+            }
         }
 
         asyncResult = "Done";
