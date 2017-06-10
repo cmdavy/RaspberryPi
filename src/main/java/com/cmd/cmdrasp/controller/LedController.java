@@ -43,9 +43,6 @@ public class LedController {
 
     private static boolean kill = false;
 
-    private Map pinMap = new HashMap<Integer, RaspiPin>();
-
-
     private void init()
     {
         kill = false;
@@ -66,13 +63,6 @@ public class LedController {
             gpioPinDigitalOutputHashMap.put("GREEN2", greenLed2);
             gpioPinDigitalOutputHashMap.put("YELLOW2", yellowLed2);
             gpioPinDigitalOutputHashMap.put("RED2", redLed2);
-        }
-
-        if (pinMap.size() == 0) {
-            pinMap.put(0, RaspiPin.GPIO_00);
-            pinMap.put(1, RaspiPin.GPIO_01);
-            pinMap.put(2, RaspiPin.GPIO_02);
-            pinMap.put(3, RaspiPin.GPIO_03);
         }
     }
 
@@ -104,23 +94,83 @@ public class LedController {
         int thisDuration = durationInSec;
         for (int i = 0; i < thisDuration && !kill; i++)
         {
-            String color = toggle(i, 3);
-            try {
-                if (color.toLowerCase().equals("green") || color.toLowerCase().equals("red"))
-                {
-                    Thread.sleep(3000);
-                    thisDuration -= 3;
-                }
-                else {
-                    Thread.sleep(1000);
-                    thisDuration--;
-                }
+
+            switch (LocalDateTime.now().getSecondOfMinute() % 10)
+            {
+                case 0:
+                    greenLed.high();
+                    yellowLed.low();
+                    redLed.low();
+                    greenLed2.low();
+                    yellowLed2.low();
+                    redLed2.high();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    greenLed.low();
+                    yellowLed.high();
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    yellowLed.low();
+                    redLed.high();
+                    greenLed2.high();
+                    redLed2.low();
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    greenLed2.low();
+                    yellowLed2.high();
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+            }
+            try
+            {
+                Thread.sleep(1000);
             }
             catch (Exception ex)
             {
                 asyncResult = ex.getMessage();
                 return ex.getMessage();
             }
+
+//            String color = toggle(i, 3);
+//            if (color.toLowerCase().equals("green"))
+//            {
+//                redLed2.high();
+//            }
+//            else if (color.toLowerCase().equals("yellow"))
+//            {
+//                redLed2.high();
+//            }
+//            else if (color.toLowerCase().equals("red"))
+//            {
+//                greenLed2.high();
+//            }
+//            try {
+//                if (color.toLowerCase().equals("green"))
+//                {
+//                    Thread.sleep(3000);
+//                    thisDuration -= 3;
+//                }
+//                else {
+//                    Thread.sleep(1000);
+//                    thisDuration--;
+//                }
+//            }
+//            catch (Exception ex)
+//            {
+//                asyncResult = ex.getMessage();
+//                return ex.getMessage();
+//            }
 
             asyncResult = String.format("Running for %d of %d seconds...", i, durationInSec);
         }
@@ -259,73 +309,15 @@ public class LedController {
         return "Crickets";
     }
 
-    @Async
-    @RequestMapping(value="/loop", method= RequestMethod.PUT)
-    @ApiOperation(value="Looper")
-    public String loopThroughGPIO()
-    {
-        if (asyncRunning)
-        {
-            return "Busy...";
-        }
-        asyncRunning = true;
-        asyncResult = "Looping...";
-
-        init();
-
-        GpioController gpioController = GpioFactory.getInstance();
-
-        Collection<GpioPin> pins = gpioController.getProvisionedPins();
-        Iterator<GpioPin> pinIterator = pins.iterator();
-        while (pinIterator.hasNext())
-        {
-            try {
-                GpioPin pin = pinIterator.next();
-                gpioController.unprovisionPin(pin);
-            }
-            catch (Exception ex)
-            {
-                System.out.println(ex.getMessage());
-                ex.printStackTrace();
-                asyncResult = "An exception occurred while unprovisioning pins.\nDetail: " + ex.getMessage();
-                return asyncResult;
-            }
-        }
-
-        for (int i = 0; i < pinMap.size(); i++)
-        {
-            try {
-                Pin pin = (Pin) pinMap.get(i);
-
-                GpioPinDigitalOutput led = gpioController.provisionDigitalOutputPin(pin, "GPIO_" + i, PinState.HIGH);
-
-                asyncResult = String.format("Looping through LED %d of 27", i);
-
-                try {
-                    Thread.sleep(danceSpeed);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-                led.low();
-            }
-            catch (Exception ex)
-            {
-                asyncResult = String.format("An exception occurred while processing pin at index %d.\nDetail: %s", i, ex.getMessage());
-                return asyncResult;
-            }
-        }
-
-        asyncResult = "Done";
-        asyncRunning = false;
-        return "Done";
-    }
-
     private void resetPins()
     {
         greenLed.low();
         yellowLed.low();
         redLed.low();
         blueLed.low();
+        greenLed2.low();
+        yellowLed2.low();
+        redLed2.low();
     }
 
     private String toggle(int index, int count)
@@ -345,6 +337,18 @@ public class LedController {
         else if (index % count == 2){
             redLed.high();
             return "Red";
+        }
+        else if (index % count == 3) {
+            greenLed2.high();
+            return "Green2";
+        }
+        else if (index % count == 4) {
+            yellowLed2.high();
+            return "Yellow2";
+        }
+        else if (index % count == 5) {
+            redLed2.high();
+            return "Red2";
         }
         else
         {
