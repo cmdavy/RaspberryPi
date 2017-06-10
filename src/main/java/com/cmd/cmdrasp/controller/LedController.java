@@ -243,6 +243,7 @@ public class LedController {
             }
 
             asyncResult = String.format("Looping until %s...", startTime.plusSeconds(durationInSec).toString());
+            count++;
         }
         resetPins();
         asyncResult = "Done";
