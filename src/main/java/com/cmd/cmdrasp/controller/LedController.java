@@ -228,6 +228,14 @@ public class LedController {
     @ApiOperation(value="Looper")
     public String looper(@PathVariable("duration") String duration)
     {
+        if (asyncRunning)
+        {
+            return "Busy...";
+        }
+        asyncRunning = true;
+        asyncResult = "Dancing...";
+        init();
+
         int durationInSec = Integer.parseInt(duration);
         LocalDateTime startTime = LocalDateTime.now();
         while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)) && !kill)
