@@ -108,10 +108,10 @@ public class LedController {
                 case 1:
                     break;
                 case 2:
-                    greenLed.low();
-                    yellowLed.high();
                     break;
                 case 3:
+                    greenLed.low();
+                    yellowLed.high();
                     break;
                 case 4:
                     break;
@@ -124,10 +124,10 @@ public class LedController {
                 case 6:
                     break;
                 case 7:
-                    greenLed2.low();
-                    yellowLed2.high();
                     break;
                 case 8:
+                    greenLed2.low();
+                    yellowLed2.high();
                     break;
                 case 9:
                     break;
