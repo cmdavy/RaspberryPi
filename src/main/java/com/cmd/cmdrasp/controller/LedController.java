@@ -142,36 +142,6 @@ public class LedController {
                 return ex.getMessage();
             }
 
-//            String color = toggle(i, 3);
-//            if (color.toLowerCase().equals("green"))
-//            {
-//                redLed2.high();
-//            }
-//            else if (color.toLowerCase().equals("yellow"))
-//            {
-//                redLed2.high();
-//            }
-//            else if (color.toLowerCase().equals("red"))
-//            {
-//                greenLed2.high();
-//            }
-//            try {
-//                if (color.toLowerCase().equals("green"))
-//                {
-//                    Thread.sleep(3000);
-//                    thisDuration -= 3;
-//                }
-//                else {
-//                    Thread.sleep(1000);
-//                    thisDuration--;
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                asyncResult = ex.getMessage();
-//                return ex.getMessage();
-//            }
-
             asyncResult = String.format("Running for %d of %d seconds...", i, durationInSec);
         }
         resetPins();
@@ -251,6 +221,34 @@ public class LedController {
         asyncResult = "Done";
         asyncRunning = false;
         return "Done";
+    }
+
+    @Async
+    @RequestMapping(value="/dance/loop/{duration}", method= RequestMethod.PUT)
+    @ApiOperation(value="Looper")
+    public String looper(@PathVariable("duration") String duration)
+    {
+        int durationInSec = Integer.parseInt(duration);
+        LocalDateTime startTime = LocalDateTime.now();
+        while (LocalDateTime.now().isBefore(startTime.plusSeconds(durationInSec)) && !kill)
+        {
+            try {
+                toggle(count, gpioPinDigitalOutputHashMap.size());
+                Thread.sleep(danceSpeed);
+            }
+            catch (Exception ex)
+            {
+                asyncResult = ex.getMessage();
+                return ex.getMessage();
+            }
+
+            asyncResult = String.format("Looping until %s...", startTime.plusSeconds(durationInSec).toString());
+        }
+        resetPins();
+        asyncResult = "Done";
+        asyncRunning = false;
+        return "Done";
+
     }
 
     @RequestMapping(value="/dance/faster", method=RequestMethod.PUT)
